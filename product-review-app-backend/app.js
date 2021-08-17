@@ -13,6 +13,7 @@ var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
 
 var app = express();
+const url = process.env.URL;
 
 const MongoClient = require("mongodb").MongoClient;
 const client = new MongoClient(url, { useUnifiedTopology: true });
