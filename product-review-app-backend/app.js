@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const fs = require("fs");
 const cors = require("cors");
+const env = require("dotenv").config();
 
 const uaa = require("./middlewares/uaa");
 var indexRouter = require("./routes/index");
@@ -14,10 +15,7 @@ var authRouter = require("./routes/auth");
 var app = express();
 
 const MongoClient = require("mongodb").MongoClient;
-const client = new MongoClient(
-  "mongodb+srv://hung:abc1234567@cluster0.7hv9o.mongodb.net?retryWrites=true&w=majority",
-  { useUnifiedTopology: true }
-);
+const client = new MongoClient(url, { useUnifiedTopology: true });
 
 let connection;
 
@@ -34,7 +32,7 @@ app.use(cors());
 
 app.use("/", function (req, res, next) {
   const log = fs.createWriteStream(__dirname + "/access.log", { flags: "a" });
-  log.write(new Date()+req.method + req.url + "\n");
+  log.write(new Date() + req.method + req.url + "\n");
 
   next();
 });
